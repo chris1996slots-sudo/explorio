@@ -180,7 +180,7 @@ export const activities = [
     image: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400',
     images: [
       'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800',
-      'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800',
+      'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?w=800',
     ],
     description: 'Walk through centuries of history with our expert guides.',
   },
@@ -200,7 +200,7 @@ export const activities = [
     image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=400',
     images: [
       'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800',
-      'https://images.unsplash.com/photo-1486915309615-911928968e44?w=800',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800',
     ],
     description: 'Experience the breathtaking sunset from the mountain peaks of Cyprus.',
   },
@@ -368,9 +368,9 @@ export const activities = [
     durations: [{ label: '2 hours', value: '2h' }],
     whatsIncluded: ['Guide', 'Entry fees', 'Informational booklet'],
     whatToBring: ['Modest clothing', 'Camera'],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400',
+    image: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?w=400',
     images: [
-      'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800',
+      'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?w=800',
     ],
     description: 'Explore the magnificent Byzantine churches of Ayia Napa.',
   },
