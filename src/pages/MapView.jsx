@@ -1,20 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import Header from '../components/Header'
 import FilterModal from '../components/FilterModal'
 import FAQModal from '../components/FAQModal'
 import LegalModal from '../components/LegalModal'
 import CardPopup from '../components/CardPopup'
-import { activities, mapMarkers } from '../data/demoData'
-import { Waves, Landmark, Mountain, UtensilsCrossed, Bike } from 'lucide-react'
-
-const categoryIcons = {
-  'water-sports': Waves,
-  'culture': Landmark,
-  'hiking': Mountain,
-  'food-tours': UtensilsCrossed,
-  'cycling': Bike,
-}
+import { activities } from '../data/demoData'
 
 const markerColors = {
   'water-sports': '#E8A94E',
@@ -23,6 +17,55 @@ const markerColors = {
   'food-tours': '#7CC8D0',
   'cycling': '#D4903A',
 }
+
+const categorySymbols = {
+  'water-sports': '🌊',
+  'culture': '🏛',
+  'hiking': '⛰',
+  'food-tours': '🍴',
+  'cycling': '🚴',
+}
+
+function createMarkerIcon(category) {
+  const color = markerColors[category] || '#6BBF8A'
+  const symbol = categorySymbols[category] || '📍'
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width:36px;height:36px;border-radius:50%;
+      background:${color};
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,0.3);
+      font-size:16px;cursor:pointer;
+      border:2px solid white;
+    ">${symbol}</div>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    popupAnchor: [0, -20],
+  })
+}
+
+// Spread activities across the Ayia Napa / Protaras area
+const activityLocations = {
+  'blue-waves-1': [34.9825, 33.9780],
+  'scuba-diving-1': [34.9870, 33.9830],
+  'scuba-diving-2': [35.0150, 34.0530],
+  'cultural-tour-1': [34.9890, 33.9750],
+  'hiking-1': [34.9750, 33.9600],
+  'food-tour-1': [34.9840, 33.9820],
+  'cycling-1': [35.0120, 34.0480],
+  'blue-waves-2': [35.0180, 34.0550],
+  'kayak-tour-1': [34.9800, 33.9700],
+  'jeep-safari-1': [34.9700, 33.9550],
+  'wine-tour-1': [34.9780, 33.9680],
+  'bike-tour-2': [34.9730, 33.9620],
+  'boat-party-1': [35.0100, 34.0600],
+  'church-tour-1': [34.9860, 33.9760],
+}
+
+// Center between Ayia Napa and Protaras
+const MAP_CENTER = [34.9950, 34.0100]
+const MAP_ZOOM = 13
 
 export default function MapView() {
   const navigate = useNavigate()
@@ -33,18 +76,13 @@ export default function MapView() {
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [viewMode, setViewMode] = useState('map')
 
-  // Position markers in a cluster pattern
-  const markerPositions = [
-    { top: '30%', left: '55%', category: 'water-sports' },
-    { top: '35%', left: '50%', category: 'culture' },
-    { top: '33%', left: '53%', category: 'hiking' },
-    { top: '50%', left: '54%', category: 'food-tours' },
-  ]
-
-  const handleMarkerClick = (category) => {
-    const activity = activities.find(a => a.category === category)
-    if (activity) setSelectedActivity(activity)
-  }
+  const filteredActivities = useMemo(() => {
+    if (!searchQuery) return activities
+    return activities.filter(a =>
+      a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      a.category.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [searchQuery])
 
   return (
     <div>
@@ -59,41 +97,31 @@ export default function MapView() {
       />
 
       <div className="map-container">
-        <div className="map-placeholder">
-          {/* Simulated road labels */}
-          <div style={{ position: 'absolute', top: '25%', left: '40%', transform: 'rotate(-30deg)', color: '#999', fontSize: '0.75rem', letterSpacing: '2px' }}>
-            Agion Saranta
-          </div>
-          <div style={{ position: 'absolute', top: '60%', left: '20%', color: '#999', fontSize: '0.75rem', letterSpacing: '2px' }}>
-            Spyrou Kyprianou
-          </div>
-          <div style={{ position: 'absolute', top: '70%', left: '30%', color: '#999', fontSize: '0.7rem' }}>
-            Foti Pitta
-          </div>
-          <div style={{ position: 'absolute', top: '55%', left: '35%', color: '#999', fontSize: '0.7rem' }}>
-            Fanou
-          </div>
-
-          {/* Map markers */}
-          {markerPositions.map((pos, idx) => {
-            const Icon = categoryIcons[pos.category] || Waves
-            const color = markerColors[pos.category] || '#6BBF8A'
+        <MapContainer
+          center={MAP_CENTER}
+          zoom={MAP_ZOOM}
+          style={{ width: '100%', height: '100%' }}
+          zoomControl={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {filteredActivities.map(activity => {
+            const pos = activityLocations[activity.id]
+            if (!pos) return null
             return (
-              <div
-                key={idx}
-                className="map-marker"
-                style={{ top: pos.top, left: pos.left }}
-                onClick={() => handleMarkerClick(pos.category)}
-              >
-                <div className="marker-pin" style={{ background: color }}>
-                  <div className="marker-icon">
-                    <Icon size={16} />
-                  </div>
-                </div>
-              </div>
+              <Marker
+                key={activity.id}
+                position={pos}
+                icon={createMarkerIcon(activity.category)}
+                eventHandlers={{
+                  click: () => setSelectedActivity(activity),
+                }}
+              />
             )
           })}
-        </div>
+        </MapContainer>
       </div>
 
       {/* Card Popup */}
