@@ -45,26 +45,26 @@ function createMarkerIcon(category) {
   })
 }
 
-// Spread activities across the Ayia Napa / Protaras area
+// Activity locations at real landmarks in Ayia Napa / Protaras area
 const activityLocations = {
-  'blue-waves-1': [34.9825, 33.9780],
-  'scuba-diving-1': [34.9870, 33.9830],
-  'scuba-diving-2': [35.0150, 34.0530],
-  'cultural-tour-1': [34.9890, 33.9750],
-  'hiking-1': [34.9750, 33.9600],
-  'food-tour-1': [34.9840, 33.9820],
-  'cycling-1': [35.0120, 34.0480],
-  'blue-waves-2': [35.0180, 34.0550],
-  'kayak-tour-1': [34.9800, 33.9700],
-  'jeep-safari-1': [34.9700, 33.9550],
-  'wine-tour-1': [34.9780, 33.9680],
-  'bike-tour-2': [34.9730, 33.9620],
-  'boat-party-1': [35.0100, 34.0600],
-  'church-tour-1': [34.9860, 33.9760],
+  'blue-waves-1': [34.9825, 34.0033],    // Ayia Napa Old Harbor
+  'scuba-diving-1': [34.9876, 33.9695],  // Nissi Beach area
+  'scuba-diving-2': [34.9833, 34.0690],  // Konnos Bay
+  'cultural-tour-1': [34.9811, 33.9540], // Makronissos Tombs
+  'hiking-1': [34.9619, 34.0656],        // Cape Greco viewpoint
+  'food-tour-1': [34.9899, 33.9994],     // Ayia Napa Town Square
+  'cycling-1': [35.0125, 34.0583],       // Protaras coastal promenade
+  'blue-waves-2': [35.0316, 34.0414],    // Pernera Beach
+  'kayak-tour-1': [34.9832, 33.9580],    // Makronissos Beach area
+  'jeep-safari-1': [34.9760, 34.0550],   // Cape Greco park inland
+  'wine-tour-1': [34.9870, 34.0010],     // Ayia Napa restaurant district
+  'bike-tour-2': [34.9950, 34.0120],     // Ayia Napa State Forest road
+  'boat-party-1': [35.0165, 34.0508],    // Protaras harbor area
+  'church-tour-1': [34.9892, 33.9997],   // Ayia Napa Monastery
 }
 
 // Center between Ayia Napa and Protaras
-const MAP_CENTER = [34.9950, 34.0100]
+const MAP_CENTER = [34.9950, 34.0150]
 const MAP_ZOOM = 13
 
 export default function MapView() {
