@@ -29,7 +29,7 @@ export default function LoginPage({ onLogin }) {
         <form className="login-form-card" onSubmit={handleLogin}>
           <label>Email</label>
           <input
-            type="email"
+            type="text"
             placeholder="name@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
