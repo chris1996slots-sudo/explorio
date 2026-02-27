@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { activities, providers, addOns } from '../data/demoData'
 import { X, Mail, Phone, Check, Printer, Send, ChevronLeft, Users, Calendar, Clock, MapPin } from 'lucide-react'
+import { QRCodeSVG } from 'qrcode.react'
 
 export default function BookingFlow() {
   const { id } = useParams()
@@ -398,7 +399,9 @@ export default function BookingFlow() {
               <div className="confirmation-right">
                 <div className="qr-section">
                   <h4>Your Booking QR Code</h4>
-                  <div className="qr-placeholder">QR Code</div>
+                  <div className="qr-placeholder" style={{ background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 12 }}>
+                    <QRCodeSVG value="https://www.google.com" size={96} />
+                  </div>
                   <p className="qr-hint">Scan this QR Code to add the booking to your wallet</p>
                 </div>
                 <button className="action-btn print" onClick={() => window.print()}>
