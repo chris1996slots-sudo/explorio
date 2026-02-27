@@ -29,7 +29,7 @@ export default function LogoutPage({ onLogout }) {
           <div className="form-group">
             <label style={{ fontWeight: 600, marginBottom: 6, display: 'block' }}>Email</label>
             <input
-              type="email"
+              type="text"
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

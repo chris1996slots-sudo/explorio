@@ -171,7 +171,7 @@ export default function BookingFlow() {
             <div className="form-group">
               <label>Email Address <span className="required">*</span></label>
               <input
-                type="email"
+                type="text"
                 value={guestInfo.email}
                 onChange={(e) => setGuestInfo({ ...guestInfo, email: e.target.value })}
                 placeholder="john.doe@example.com"
